@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VetAgro - Sistema de Gestão Agrícola</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #7AC143 0%, #009245 50%, #006778 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 90%;
+            max-width: 1200px;
+            min-height: 600px;
+        }
+
+        /* Login Styles */
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 600px;
+            background: linear-gradient(45deg, #7AC143, #009245);
+        }
+
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .logo {
+            margin-bottom: 10px;
+        }
+        .logo img {
+            max-width: 180px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .subtitle {
+            color: #009245;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #006778;
+            font-weight: 500;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #B6D957;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus {
+            outline: none;
+            border-color: #009245;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #009245, #006778);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .login-btn:hover {
+            background: linear-gradient(45deg, #7AC143, #009245);
+            transform: translateY(-2px);
+        }
+
+        .error-msg {
+            color: #e74c3c;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        /* Dashboard Styles */
+        .dashboard {
+            display: none;
+            padding: 0;
+        }
+
+        .header {
+            background: white;
+            color: #333;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header .logo {
+            margin: 0;
+        }
+        .header .logo img {
+            max-width: 140px;
+            height: auto;
+        }
+        .header h1 {
+            display: none;
+        }
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .logout-btn:hover {
+            background: #B6D957;
+            color: #006778;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .welcome-section h2 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .welcome-section p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .module-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border-color: #2E8B57;
+        }
+
+        .module-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #2E8B57, #228B22);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 24px;
+            color: white;
+        }
+
+        .module-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .module-description {
+            color: #666;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .module-card.active {
+            border-color: #2E8B57;
+            background: #f8fffe;
+        }
+
+        .module-content {
+            display: none;
+            margin-top: 30px;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .module-content.active {
+            display: block;
+        }
+
+        .module-content h3 {
+            color: #2E8B57;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #2E8B57;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .back-btn:hover {
+            background: #5a6268;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                margin: 10px;
+            }
+
+            .header {
+                padding: 15px 20px;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .login-box {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Section -->
+        <div id="loginSection" class="login-container">
+            <div class="login-box">
+                <div class="logo"><img src="LOGO.jpeg" alt="Logo Vetagro"></div>
+                <p class="subtitle">Sistema de Gestão Agrícola</p>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username">Usuário:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Senha:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    
+                    <button type="submit" class="login-btn">Entrar</button>
+                    <div id="errorMsg" class="error-msg"></div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="dashboard">
+            <div class="header">
+                <div class="logo"><img src="LOGO.jpeg" alt="Logo Vetagro"></div>
+                <button class="logout-btn" onclick="logout()">Sair</button>
+            </div>
+            
+            <div class="main-content">
+                <div id="modulesList" class="modules-list">
+                    <div class="welcome-section">
+                        <h2>Seja bem-vindo</h2>
+                        <p>Escolha um módulo abaixo para começar</p>
+                    </div>
+                    
+                    <div class="modules-grid">
+                        <div class="module-card" onclick="window.open('https://celiotaborda.github.io/teste4/', '_blank')">
+                            <div class="module-icon">🛰️</div>
+                            <div class="module-title">Sensoriamento Remoto</div>
+                            <div class="module-description">Monitoramento via satélite e análise de imagens para otimização da produção</div>
+                        </div>
+                        
+                        <div class="module-card" onclick="openModule('solo')">
+                            <div class="module-icon">🌍</div>
+                            <div class="module-title">Análise de Solo</div>
+                            <div class="module-description">Análise completa das características físicas e químicas do solo</div>
+                        </div>
+                        
+                        <div class="module-card" onclick="openModule('plantio')">
+                            <div class="module-icon">🌱</div>
+                            <div class="module-title">Linha de Plantio</div>
+                            <div class="module-description">Planejamento e otimização das linhas de plantio para máxima eficiência</div>
+                        </div>
+                        
+                        <div class="module-card" onclick="openModule('taxa-variavel')">
+                            <div class="module-icon">📊</div>
+                            <div class="module-title">Recomendação de Taxa Variável</div>
+                            <div class="module-description">Aplicação precisa de insumos baseada em dados georeferenciados</div>
+                        </div>
+                        
+                        <div class="module-card" onclick="openModule('kmls')">
+                            <div class="module-icon">🗺️</div>
+                            <div class="module-title">KMLs</div>
+                            <div class="module-description">Gerenciamento de arquivos KML para mapeamento e geolocalização</div>
+                        </div>
+                        
+                        <div class="module-card" onclick="openModule('historico')">
+                            <div class="module-icon">📈</div>
+                            <div class="module-title">Histórico de Plantio</div>
+                            <div class="module-description">Registro completo das atividades agrícolas e produtividade</div>
+                        </div>
+                        
+                        <div class="module-card" onclick="openModule('licenca')">
+                            <div class="module-icon">📋</div>
+                            <div class="module-title">Licença Ambiental</div>
+                            <div class="module-description">Gestão de documentos e compliance ambiental</div>
+                        </div>
+                        
+                        <div class="module-card" onclick="openModule('car')">
+                            <div class="module-icon">🏛️</div>
+                            <div class="module-title">CAR</div>
+                            <div class="module-description">Cadastro Ambiental Rural e regularização fundiária</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module Contents -->
+                <div id="sensoriamento" class="module-content">
+                    <h3>🛰️ Sensoriamento Remoto</h3>
+                    <p>O módulo de Sensoriamento Remoto oferece ferramentas avançadas para monitoramento agrícola via satélite.</p>
+                    <ul class="feature-list">
+                        <li>Análise de índices de vegetação (NDVI, SAVI, EVI)</li>
+                        <li>Monitoramento de estresse hídrico</li>
+                        <li>Detecção de pragas e doenças</li>
+                        <li>Análise temporal de cultivos</li>
+                        <li>Mapas de produtividade estimada</li>
+                        <li>Alertas automáticos de anomalias</li>
+                    </ul>
+                    <button class="back-btn" onclick="backToModules()">Voltar</button>
+                </div>
+
+                <div id="solo" class="module-content">
+                    <h3>🌍 Análise de Solo</h3>
+                    <p>Análise completa das características do solo para otimização da produção agrícola.</p>
+                    <ul class="feature-list">
+                        <li>Análise química (pH, nutrientes, matéria orgânica)</li>
+                        <li>Análise física (textura, densidade, porosidade)</li>
+                        <li>Mapeamento de fertilidade</li>
+                        <li>Recomendação de correção e adubação</li>
+                        <li>Histórico de análises</li>
+                        <li>Relatórios técnicos detalhados</li>
+                    </ul>
+                    <button class="back-btn" onclick="backToModules()">Voltar</button>
+                </div>
+
+                <div id="plantio" class="module-content">
+                    <h3>🌱 Linha de Plantio</h3>
+                    <p>Planejamento e otimização das linhas de plantio para máxima eficiência produtiva.</p>
+                    <ul class="feature-list">
+                        <li>Desenho de linhas de plantio otimizadas</li>
+                        <li>Cálculo de espaçamento ideal</li>
+                        <li>Planejamento de tráfego de máquinas</li>
+                        <li>Otimização de área plantada</li>
+                        <li>Integração com GPS para plantio de precisão</li>
+                        <li>Relatórios de eficiência de plantio</li>
+                    </ul>
+                    <button class="back-btn" onclick="backToModules()">Voltar</button>
+                </div>
+
+                <div id="taxa-variavel" class="module-content">
+                    <h3>📊 Recomendação de Taxa Variável</h3>
+                    <p>Aplicação precisa de insumos baseada em dados georeferenciados para otimização de custos.</p>
+                    <ul class="feature-list">
+                        <li>Mapas de aplicação de fertilizantes</li>
+                        <li>Taxa variável de sementes</li>
+                        <li>Aplicação diferenciada de defensivos</li>
+                        <li>Otimização de custos de insumos</li>
+                        <li>Integração com máquinas agrícolas</li>
+                        <li>Relatórios de economia gerada</li>
+                    </ul>
+                    <button class="back-btn" onclick="backToModules()">Voltar</button>
+                </div>
+
+                <div id="kmls" class="module-content">
+                    <h3>🗺️ KMLs</h3>
+                    <p>Gerenciamento completo de arquivos KML para mapeamento e geolocalização agrícola.</p>
+                    <ul class="feature-list">
+                        <li>Upload e visualização de arquivos KML</li>
+                        <li>Edição de polígonos e pontos</li>
+                        <li>Conversão entre formatos (KML, SHP, GeoJSON)</li>
+                        <li>Cálculo de áreas e perímetros</li>
+                        <li>Sobreposição de camadas</li>
+                        <li>Exportação de mapas para impressão</li>
+                    </ul>
+                    <button class="back-btn" onclick="backToModules()">Voltar</button>
+                </div>
+
+                <div id="historico" class="module-content">
+                    <h3>📈 Histórico de Plantio</h3>
+                    <p>Registro completo das atividades agrícolas e acompanhamento da produtividade ao longo do tempo.</p>
+                    <ul class="feature-list">
+                        <li>Registro de todas as operações agrícolas</li>
+                        <li>Histórico de produtividade por talhão</li>
+                        <li>Controle de custos de produção</li>
+                        <li>Análise de tendências produtivas</li>
+                        <li>Comparativo entre safras</li>
+                        <li>Relatórios gerenciais detalhados</li>
+                    </ul>
+                    <button class="back-btn" onclick="backToModules()">Voltar</button>
+                </div>
+
+                <div id="licenca" class="module-content">
+                    <h3>📋 Licença Ambiental</h3>
+                    <p>Gestão completa de documentos ambientais e acompanhamento de compliance.</p>
+                    <ul class="feature-list">
+                        <li>Controle de licenças ambientais</li>
+                        <li>Calendário de renovações</li>
+                        <li>Arquivo digital de documentos</li>
+                        <li>Alertas de vencimento</li>
+                        <li>Acompanhamento de processos</li>
+                        <li>Relatórios de conformidade</li>
+                    </ul>
+                    <button class="back-btn" onclick="backToModules()">Voltar</button>
+                </div>
+
+                <div id="car" class="module-content">
+                    <h3>🏛️ CAR - Cadastro Ambiental Rural</h3>
+                    <p>Gestão do Cadastro Ambiental Rural e regularização fundiária da propriedade.</p>
+                    <ul class="feature-list">
+                        <li>Cadastramento no sistema SICAR</li>
+                        <li>Delimitação de áreas de preservação</li>
+                        <li>Análise de passivos ambientais</li>
+                        <li>Planejamento de adequação ambiental</li>
+                        <li>Acompanhamento de processos de regularização</li>
+                        <li>Relatórios de compliance ambiental</li>
+                    </ul>
+                    <button class="back-btn" onclick="backToModules()">Voltar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Credenciais de login
+        const validCredentials = {
+            username: 'vetagro',
+            password: '12345'
+        };
+
+        // Elementos DOM
+        const loginSection = document.getElementById('loginSection');
+        const dashboard = document.getElementById('dashboard');
+        const loginForm = document.getElementById('loginForm');
+        const errorMsg = document.getElementById('errorMsg');
+        const modulesList = document.getElementById('modulesList');
+
+        // Event listener para o formulário de login
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            
+            console.log('Tentativa de login:', { username, password }); // Para debug
+            
+            if (username === validCredentials.username && password === validCredentials.password) {
+                // Login bem-sucedido
+                console.log('Login bem-sucedido!');
+                loginSection.style.display = 'none';
+                dashboard.style.display = 'block';
+                errorMsg.textContent = '';
+            } else {
+                // Login inválido
+                console.log('Login falhou. Credenciais corretas:', validCredentials);
+                errorMsg.textContent = 'Usuário ou senha incorretos!';
+                document.getElementById('password').value = '';
+            }
+        });
+
+        // Função para abrir módulo
+        function openModule(moduleId) {
+            // Esconder lista de módulos
+            modulesList.style.display = 'none';
+            
+            // Mostrar conteúdo do módulo
+            const moduleContent = document.getElementById(moduleId);
+            moduleContent.style.display = 'block';
+        }
+
+        // Função para voltar aos módulos
+        function backToModules() {
+            // Esconder todos os conteúdos de módulos
+            const moduleContents = document.querySelectorAll('.module-content');
+            moduleContents.forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            // Mostrar lista de módulos
+            modulesList.style.display = 'block';
+        }
+
+        // Função de logout
+        function logout() {
+            // Esconder dashboard
+            dashboard.style.display = 'none';
+            
+            // Mostrar tela de login
+            loginSection.style.display = 'flex';
+            
+            // Limpar campos
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            errorMsg.textContent = '';
+            
+            // Voltar para lista de módulos
+            backToModules();
+        }
+
+        // Adicionar efeitos de hover nos cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const moduleCards = document.querySelectorAll('.module-card');
+            
+            moduleCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
