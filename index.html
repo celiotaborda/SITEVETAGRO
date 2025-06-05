@@ -116,6 +116,25 @@
             font-size: 14px;
         }
 
+        .exit-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .exit-btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+
         /* Dashboard Styles */
         .dashboard {
             display: none;
@@ -130,6 +149,7 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
         }
         .header .logo {
             margin: 0;
@@ -142,17 +162,20 @@
             display: none;
         }
         .logout-btn {
-            background: rgba(255, 255, 255, 0.2);
+            background: #e74c3c;
             color: white;
-            border: 2px solid white;
+            border: none;
             padding: 8px 16px;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: absolute;
+            right: 20px;
+            top: 20px;
         }
         .logout-btn:hover {
-            background: #B6D957;
-            color: #006778;
+            background: #c0392b;
+            transform: translateY(-2px);
         }
 
         .main-content {
@@ -283,6 +306,99 @@
             background: #5a6268;
         }
 
+        .submodule-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #2E8B57;
+        }
+
+        .submodule-section h4 {
+            color: #2E8B57;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .submodule-section .feature-list {
+            margin-top: 10px;
+        }
+
+        .submodule-section .feature-list li {
+            color: #495057;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            color: #2E8B57;
+            font-size: 1.5em;
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            padding: 5px;
+        }
+
+        .close-modal:hover {
+            color: #333;
+        }
+
+        .safra-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .safra-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .safra-item:hover {
+            background-color: #f8f9fa;
+            transform: translateX(5px);
+        }
+
+        .safra-item:last-child {
+            border-bottom: none;
+        }
+
         @media (max-width: 768px) {
             .container {
                 width: 95%;
@@ -352,166 +468,153 @@
                     </div>
                     
                     <div class="modules-grid">
-                        <div class="module-card" onclick="window.open('https://celiotaborda.github.io/teste4/', '_blank')">
+                        <div class="module-card" onclick="openModule('assistencia')">
+                            <div class="module-icon">🌱</div>
+                            <div class="module-title">Assistência Técnica</div>
+                            <div class="module-description">Suporte técnico e gestão de assistência</div>
+                        </div>
+
+                        <div class="module-card" onclick="openModule('meio-ambiente')">
+                            <div class="module-icon">🌿</div>
+                            <div class="module-title">Meio Ambiente</div>
+                            <div class="module-description">Gestão ambiental e compliance</div>
+                        </div>
+
+                        <div class="module-card" onclick="openModule('projetos')">
+                            <div class="module-icon">📋</div>
+                            <div class="module-title">Projetos</div>
+                            <div class="module-description">Gestão de projetos e planejamento</div>
+                        </div>
+
+                        <div class="module-card" onclick="openModule('seguranca')">
+                            <div class="module-icon">🛡️</div>
+                            <div class="module-title">Segurança do Trabalho</div>
+                            <div class="module-description">Gestão de segurança e saúde ocupacional</div>
+                        </div>
+
+                        <div class="module-card" onclick="openSensoriamento()">
                             <div class="module-icon">🛰️</div>
                             <div class="module-title">Sensoriamento Remoto</div>
-                            <div class="module-description">Monitoramento via satélite e análise de imagens para otimização da produção</div>
+                            <div class="module-description">Monitoramento via satélite e análise de imagens</div>
                         </div>
-                        
-                        <div class="module-card" onclick="openModule('solo')">
-                            <div class="module-icon">🌍</div>
-                            <div class="module-title">Análise de Solo</div>
-                            <div class="module-description">Análise completa das características físicas e químicas do solo</div>
-                        </div>
-                        
-                        <div class="module-card" onclick="openModule('plantio')">
-                            <div class="module-icon">🌱</div>
-                            <div class="module-title">Linha de Plantio</div>
-                            <div class="module-description">Planejamento e otimização das linhas de plantio para máxima eficiência</div>
-                        </div>
-                        
-                        <div class="module-card" onclick="openModule('taxa-variavel')">
-                            <div class="module-icon">📊</div>
-                            <div class="module-title">Recomendação de Taxa Variável</div>
-                            <div class="module-description">Aplicação precisa de insumos baseada em dados georeferenciados</div>
-                        </div>
-                        
-                        <div class="module-card" onclick="openModule('kmls')">
-                            <div class="module-icon">🗺️</div>
-                            <div class="module-title">KMLs</div>
-                            <div class="module-description">Gerenciamento de arquivos KML para mapeamento e geolocalização</div>
-                        </div>
-                        
-                        <div class="module-card" onclick="openModule('historico')">
-                            <div class="module-icon">📈</div>
-                            <div class="module-title">Histórico de Plantio</div>
-                            <div class="module-description">Registro completo das atividades agrícolas e produtividade</div>
-                        </div>
-                        
-                        <div class="module-card" onclick="openModule('licenca')">
-                            <div class="module-icon">📋</div>
-                            <div class="module-title">Licença Ambiental</div>
-                            <div class="module-description">Gestão de documentos e compliance ambiental</div>
-                        </div>
-                        
-                        <div class="module-card" onclick="openModule('car')">
-                            <div class="module-icon">🏛️</div>
-                            <div class="module-title">CAR</div>
-                            <div class="module-description">Cadastro Ambiental Rural e regularização fundiária</div>
+
+                        <div class="module-card" onclick="openModule('agricultura-precisao')">
+                            <div class="module-icon">🎯</div>
+                            <div class="module-title">Agricultura de Precisão</div>
+                            <div class="module-description">Tecnologias e ferramentas de precisão</div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Module Contents -->
-                <div id="sensoriamento" class="module-content">
-                    <h3>🛰️ Sensoriamento Remoto</h3>
-                    <p>O módulo de Sensoriamento Remoto oferece ferramentas avançadas para monitoramento agrícola via satélite.</p>
-                    <ul class="feature-list">
-                        <li>Análise de índices de vegetação (NDVI, SAVI, EVI)</li>
-                        <li>Monitoramento de estresse hídrico</li>
-                        <li>Detecção de pragas e doenças</li>
-                        <li>Análise temporal de cultivos</li>
-                        <li>Mapas de produtividade estimada</li>
-                        <li>Alertas automáticos de anomalias</li>
-                    </ul>
+                <div id="assistencia" class="module-content">
+                    <h3>🌱 Assistência Técnica</h3>
+                    <p>Gestão completa de assistência técnica e suporte.</p>
+                    
+                    <div class="submodule-section" onclick="openSafrasModal()" style="cursor: pointer;">
+                        <h4>📊 Relatórios de Visitas</h4>
+                    </div>
+
+                    <div class="submodule-section">
+                        <h4>📈 Histórico de Plantio</h4>
+                    </div>
+
+                    <div class="submodule-section">
+                        <h4>🗺️ KMLs</h4>
+                    </div>
+
+                    <div class="submodule-section">
+                        <h4>📝 Outros</h4>
+                    </div>
                     <button class="back-btn" onclick="backToModules()">Voltar</button>
                 </div>
 
-                <div id="solo" class="module-content">
-                    <h3>🌍 Análise de Solo</h3>
-                    <p>Análise completa das características do solo para otimização da produção agrícola.</p>
-                    <ul class="feature-list">
-                        <li>Análise química (pH, nutrientes, matéria orgânica)</li>
-                        <li>Análise física (textura, densidade, porosidade)</li>
-                        <li>Mapeamento de fertilidade</li>
-                        <li>Recomendação de correção e adubação</li>
-                        <li>Histórico de análises</li>
-                        <li>Relatórios técnicos detalhados</li>
-                    </ul>
+                <!-- Modal de Safras -->
+                <div id="safrasModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Relatórios</h3>
+                            <button class="close-modal" onclick="closeSafrasModal()">&times;</button>
+                        </div>
+                        <ul class="safra-list">
+                            <li class="safra-item" onclick="openSafra('2025-2026')">SAFRA 2025/2026</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="meio-ambiente" class="module-content">
+                    <h3>🌿 Meio Ambiente</h3>
+                    <p>Gestão ambiental e compliance.</p>
+                    
+                    <div class="submodule-section" onclick="openAmbientalLink('licenca')" style="cursor: pointer;">
+                        <h4>📋 Licenças Ambientais</h4>
+                    </div>
+
+                    <div class="submodule-section" onclick="openAmbientalLink('outorga')" style="cursor: pointer;">
+                        <h4>💧 Outorga</h4>
+                    </div>
+
+                    <div class="submodule-section" onclick="openAmbientalLink('car')" style="cursor: pointer;">
+                        <h4>🏛️ CAR</h4>
+                    </div>
+
+                    <div class="submodule-section" onclick="openAmbientalLink('mapas')" style="cursor: pointer;">
+                        <h4>🗺️ MAPAS</h4>
+                    </div>
                     <button class="back-btn" onclick="backToModules()">Voltar</button>
                 </div>
 
-                <div id="plantio" class="module-content">
-                    <h3>🌱 Linha de Plantio</h3>
-                    <p>Planejamento e otimização das linhas de plantio para máxima eficiência produtiva.</p>
-                    <ul class="feature-list">
-                        <li>Desenho de linhas de plantio otimizadas</li>
-                        <li>Cálculo de espaçamento ideal</li>
-                        <li>Planejamento de tráfego de máquinas</li>
-                        <li>Otimização de área plantada</li>
-                        <li>Integração com GPS para plantio de precisão</li>
-                        <li>Relatórios de eficiência de plantio</li>
-                    </ul>
+                <div id="projetos" class="module-content">
+                    <h3>📋 Projetos</h3>
+                    <p>Gestão de projetos e planejamento.</p>
+                    
+                    <div class="submodule-section">
+                        <h4>📊 Subgrupo 1</h4>
+                    </div>
+
+                    <div class="submodule-section">
+                        <h4>📈 Subgrupo 2</h4>
+                    </div>
                     <button class="back-btn" onclick="backToModules()">Voltar</button>
                 </div>
 
-                <div id="taxa-variavel" class="module-content">
-                    <h3>📊 Recomendação de Taxa Variável</h3>
-                    <p>Aplicação precisa de insumos baseada em dados georeferenciados para otimização de custos.</p>
-                    <ul class="feature-list">
-                        <li>Mapas de aplicação de fertilizantes</li>
-                        <li>Taxa variável de sementes</li>
-                        <li>Aplicação diferenciada de defensivos</li>
-                        <li>Otimização de custos de insumos</li>
-                        <li>Integração com máquinas agrícolas</li>
-                        <li>Relatórios de economia gerada</li>
-                    </ul>
+                <div id="seguranca" class="module-content">
+                    <h3>🛡️ Segurança do Trabalho</h3>
+                    <p>Gestão de segurança e saúde ocupacional.</p>
+                    
+                    <div class="submodule-section">
+                        <h4>📋 Subgrupo 1</h4>
+                    </div>
+
+                    <div class="submodule-section">
+                        <h4>📈 Subgrupo 2</h4>
+                    </div>
                     <button class="back-btn" onclick="backToModules()">Voltar</button>
                 </div>
 
-                <div id="kmls" class="module-content">
-                    <h3>🗺️ KMLs</h3>
-                    <p>Gerenciamento completo de arquivos KML para mapeamento e geolocalização agrícola.</p>
-                    <ul class="feature-list">
-                        <li>Upload e visualização de arquivos KML</li>
-                        <li>Edição de polígonos e pontos</li>
-                        <li>Conversão entre formatos (KML, SHP, GeoJSON)</li>
-                        <li>Cálculo de áreas e perímetros</li>
-                        <li>Sobreposição de camadas</li>
-                        <li>Exportação de mapas para impressão</li>
-                    </ul>
-                    <button class="back-btn" onclick="backToModules()">Voltar</button>
-                </div>
+                <div id="agricultura-precisao" class="module-content">
+                    <h3>🎯 Agricultura de Precisão</h3>
+                    <p>Tecnologias e ferramentas de precisão para agricultura.</p>
+                    
+                    <div class="submodule-section">
+                        <h4>🌐 Plataforma Online</h4>
+                    </div>
 
-                <div id="historico" class="module-content">
-                    <h3>📈 Histórico de Plantio</h3>
-                    <p>Registro completo das atividades agrícolas e acompanhamento da produtividade ao longo do tempo.</p>
-                    <ul class="feature-list">
-                        <li>Registro de todas as operações agrícolas</li>
-                        <li>Histórico de produtividade por talhão</li>
-                        <li>Controle de custos de produção</li>
-                        <li>Análise de tendências produtivas</li>
-                        <li>Comparativo entre safras</li>
-                        <li>Relatórios gerenciais detalhados</li>
-                    </ul>
-                    <button class="back-btn" onclick="backToModules()">Voltar</button>
-                </div>
+                    <div class="submodule-section">
+                        <h4>🌱 Linhas de Plantio</h4>
+                    </div>
 
-                <div id="licenca" class="module-content">
-                    <h3>📋 Licença Ambiental</h3>
-                    <p>Gestão completa de documentos ambientais e acompanhamento de compliance.</p>
-                    <ul class="feature-list">
-                        <li>Controle de licenças ambientais</li>
-                        <li>Calendário de renovações</li>
-                        <li>Arquivo digital de documentos</li>
-                        <li>Alertas de vencimento</li>
-                        <li>Acompanhamento de processos</li>
-                        <li>Relatórios de conformidade</li>
-                    </ul>
-                    <button class="back-btn" onclick="backToModules()">Voltar</button>
-                </div>
+                    <div class="submodule-section">
+                        <h4>🗺️ Mapas</h4>
+                    </div>
 
-                <div id="car" class="module-content">
-                    <h3>🏛️ CAR - Cadastro Ambiental Rural</h3>
-                    <p>Gestão do Cadastro Ambiental Rural e regularização fundiária da propriedade.</p>
-                    <ul class="feature-list">
-                        <li>Cadastramento no sistema SICAR</li>
-                        <li>Delimitação de áreas de preservação</li>
-                        <li>Análise de passivos ambientais</li>
-                        <li>Planejamento de adequação ambiental</li>
-                        <li>Acompanhamento de processos de regularização</li>
-                        <li>Relatórios de compliance ambiental</li>
-                    </ul>
+                    <div class="submodule-section">
+                        <h4>🔬 Análises de Solo</h4>
+                    </div>
+
+                    <div class="submodule-section">
+                        <h4>📊 Recomendação de Taxa Variável</h4>
+                    </div>
                     <button class="back-btn" onclick="backToModules()">Voltar</button>
                 </div>
             </div>
@@ -522,7 +625,15 @@
         // Credenciais de login
         const validCredentials = {
             username: 'vetagro',
-            password: '12345'
+            password: '12345',
+            celio: {
+                username: 'celio',
+                password: '12345'
+            },
+            figueiras: {
+                username: '3figueiras',
+                password: '12345'
+            }
         };
 
         // Elementos DOM
@@ -531,6 +642,7 @@
         const loginForm = document.getElementById('loginForm');
         const errorMsg = document.getElementById('errorMsg');
         const modulesList = document.getElementById('modulesList');
+        let currentUser = '';
 
         // Event listener para o formulário de login
         loginForm.addEventListener('submit', function(e) {
@@ -541,9 +653,12 @@
             
             console.log('Tentativa de login:', { username, password }); // Para debug
             
-            if (username === validCredentials.username && password === validCredentials.password) {
+            if ((username === validCredentials.username && password === validCredentials.password) || 
+                (username === validCredentials.celio.username && password === validCredentials.celio.password) ||
+                (username === validCredentials.figueiras.username && password === validCredentials.figueiras.password)) {
                 // Login bem-sucedido
                 console.log('Login bem-sucedido!');
+                currentUser = username;
                 loginSection.style.display = 'none';
                 dashboard.style.display = 'block';
                 errorMsg.textContent = '';
@@ -554,6 +669,15 @@
                 document.getElementById('password').value = '';
             }
         });
+
+        // Função para abrir o módulo de sensoriamento remoto
+        function openSensoriamento() {
+            if (currentUser === 'celio') {
+                window.open('https://www.google.com', '_blank');
+            } else {
+                window.open('https://celiotaborda.github.io/teste4/', '_blank');
+            }
+        }
 
         // Função para abrir módulo
         function openModule(moduleId) {
@@ -608,6 +732,50 @@
                 });
             });
         });
+
+        // Funções para o modal de safras
+        function openSafrasModal() {
+            document.getElementById('safrasModal').style.display = 'flex';
+        }
+
+        function closeSafrasModal() {
+            document.getElementById('safrasModal').style.display = 'none';
+        }
+
+        function openSafra(safraId) {
+            if (currentUser === '3figueiras') {
+                window.open('https://drive.google.com/drive/folders/13-lVojpzjHj33CXO4IgiEWdbKrMdGY8x', '_blank');
+            } else {
+                console.log('Abrindo safra:', safraId);
+            }
+            closeSafrasModal();
+        }
+
+        // Fechar modal ao clicar fora dele
+        window.onclick = function(event) {
+            const modal = document.getElementById('safrasModal');
+            if (event.target === modal) {
+                closeSafrasModal();
+            }
+        }
+
+        // Função para abrir links do módulo ambiental
+        function openAmbientalLink(tipo) {
+            if (currentUser === '3figueiras') {
+                const links = {
+                    'licenca': 'https://drive.google.com/drive/folders/1Zt2CPgU0QokLGgwwQmKwlvC4DoqxtqhH?usp=sharing',
+                    'outorga': 'https://drive.google.com/drive/folders/17ahzB6wBCCKa9B8ycu7BBk_aVPDzaU3d?usp=sharing',
+                    'mapas': 'https://drive.google.com/drive/folders/1M9ZjcyM0YRdjM_OZpGyv1XOR6wJ1-ZaX?usp=sharing',
+                    'car': 'https://drive.google.com/drive/folders/1RJEb0-zLLQ7IZI_g7HG8vq4j9MxMwVqV?usp=sharing'
+                };
+                
+                if (links[tipo]) {
+                    window.open(links[tipo], '_blank');
+                }
+            } else {
+                console.log('Abrindo módulo:', tipo);
+            }
+        }
     </script>
 </body>
 </html>
